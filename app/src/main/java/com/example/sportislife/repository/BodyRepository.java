@@ -7,17 +7,17 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
 import com.example.sportislife.db.AppDatabase;
-import com.example.sportislife.model.Body;
+import com.example.sportislife.repository.model.Body;
 
 import java.util.Date;
 import java.util.List;
 
-public class AppRepository {
+public class BodyRepository {
 
     private String DB_NAME = "db_sport_is_life";
     private AppDatabase appDatabase;
 
-    public AppRepository(Context context) {
+    public BodyRepository(Context context) {
         appDatabase = Room.databaseBuilder(context, AppDatabase.class, DB_NAME).build();
     }
 
@@ -56,6 +56,6 @@ public class AppRepository {
     }
 
     public LiveData<List<Body>> getBodys() {
-        return appDatabase.daoBody().fetchAllTasks();
+        return appDatabase.daoBody().fetchAllBody();
     }
 }

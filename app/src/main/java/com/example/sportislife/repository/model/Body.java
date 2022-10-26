@@ -1,4 +1,4 @@
-package com.example.sportislife.model;
+package com.example.sportislife.repository.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
