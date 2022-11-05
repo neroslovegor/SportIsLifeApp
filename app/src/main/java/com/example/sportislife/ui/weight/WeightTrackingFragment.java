@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.sportislife.R;
 import com.example.sportislife.dao.DaoWeight;
@@ -20,7 +21,8 @@ import com.example.sportislife.databinding.FragmentWeightTrackingBinding;
 import com.example.sportislife.db.AppDatabase;
 import com.example.sportislife.repository.WeightRepository;
 import com.github.mikephil.charting.charts.LineChart;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 public class WeightTrackingFragment extends Fragment {
 
@@ -28,8 +30,9 @@ public class WeightTrackingFragment extends Fragment {
     private FragmentWeightTrackingBinding binding;
 
     private EditText editTextDate, editTextWeight;
-    private FloatingActionButton btnSaveWeight;
+    //private FloatingActionButton btnSaveWeight;
     private LineChart weightLineChart;
+    private ListView listViewHistoryWeight;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,13 +49,21 @@ public class WeightTrackingFragment extends Fragment {
         editTextDate = binding.editTextDate;
         editTextWeight = binding.editTextWeight;
         weightLineChart = binding.weightLineChart;
+        listViewHistoryWeight = binding.listViewHistoryWeight;
 
         viewModel.getCurrentDate().observe(getViewLifecycleOwner(), editTextDate::setText);
 
-        viewModel.getWeightData().observe(getViewLifecycleOwner(), weightLineChart::setData);
+        //viewModel.getWeightData().observe(getViewLifecycleOwner(), weightLineChart::setData);
+        viewModel.getLineChart().observe(getViewLifecycleOwner(), lineChart -> {
+            weightLineChart.getDescription().setText("Weight/Date");
+            weightLineChart.setData(lineChart.getData());
+            weightLineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            weightLineChart.getXAxis().setValueFormatter(lineChart.getXAxis().getValueFormatter());
+            weightLineChart.getXAxis().setGranularity(1f);
+        });
 
         viewModel.getErrorWeight().observe(getViewLifecycleOwner(), hasError -> {
-            if (hasError == true) {
+            if (hasError) {
                 editTextWeight.setError(getString(R.string.error_this_field_cannot_be_empty));
                 viewModel.doneErrorWeight();
             }
