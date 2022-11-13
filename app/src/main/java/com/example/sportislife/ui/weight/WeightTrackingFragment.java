@@ -12,10 +12,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.sportislife.R;
+import com.example.sportislife.adapter.WeightTrackingAdapter;
 import com.example.sportislife.dao.DaoWeight;
 import com.example.sportislife.databinding.FragmentWeightTrackingBinding;
 import com.example.sportislife.db.AppDatabase;
@@ -33,13 +35,14 @@ public class WeightTrackingFragment extends Fragment {
     //private FloatingActionButton btnSaveWeight;
     private LineChart weightLineChart;
     private ListView listViewHistoryWeight;
+    private WeightTrackingAdapter weightTrackingAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Application application = this.requireActivity().getApplication();
         DaoWeight dao = AppDatabase.getInstance(application).daoWeight();
         WeightRepository repository = new WeightRepository(dao);
-        WeightTrackingFactory factory = new WeightTrackingFactory(repository, application);
+        WeightTrackingFactory factory = new WeightTrackingFactory(repository, application   );
 
         viewModel = new ViewModelProvider(this, factory).get(WeightTrackingViewModel.class);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weight_tracking, container, false);
@@ -60,6 +63,15 @@ public class WeightTrackingFragment extends Fragment {
             weightLineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
             weightLineChart.getXAxis().setValueFormatter(lineChart.getXAxis().getValueFormatter());
             weightLineChart.getXAxis().setGranularity(1f);
+        });
+
+        viewModel.getWeightData().observe(getViewLifecycleOwner(), weightData -> {
+            weightTrackingAdapter = new WeightTrackingAdapter(application.getApplicationContext(), weightData);
+            listViewHistoryWeight.setAdapter(weightTrackingAdapter);
+        });
+        listViewHistoryWeight.setOnItemClickListener((parent, view, position, id) -> {
+            final int itemId = (int) weightTrackingAdapter.getItemId(position);
+            viewModel.deleteButton(itemId);
         });
 
         viewModel.getErrorWeight().observe(getViewLifecycleOwner(), hasError -> {

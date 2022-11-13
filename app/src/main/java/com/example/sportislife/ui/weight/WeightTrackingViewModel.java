@@ -37,8 +37,8 @@ public class WeightTrackingViewModel extends ViewModel {
         currentDate.setValue(initCurrentDate());
     }
 
-    private MutableLiveData<LineData> weightData;
-    public MutableLiveData<LineData> getWeightData() {
+    private MutableLiveData<List<Weight>> weightData;
+    public MutableLiveData<List<Weight>> getWeightData() {
         return weightData;
     }
     public void setWeightData() {
@@ -84,36 +84,21 @@ public class WeightTrackingViewModel extends ViewModel {
 
     private void updateData() {
         setCurrentDate();
+        setWeightData();
         setLineChart();
         inputWeight.setValue(null);
     }
     private String initCurrentDate() {
         return new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
     }
-    private LineData initWeightData() {
+    private List<Weight> initWeightData() {
         List<Weight> weights = repository.getAll();
-        List<Entry> weightsData = new ArrayList<>();
-
-        if (weights == null) return null;
-
-        int counter = 1;
-        for (Weight weight : weights) {
-            weightsData.add(new Entry(counter++, weight.getWeight()));
-        }
-
-        LineDataSet lineDataSet = new LineDataSet(weightsData, "Вес");
-        lineDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        lineDataSet.setValueTextColor(Color.BLACK);
-        lineDataSet.setValueTextSize(16f);
-
-        return new LineData(lineDataSet);
+        return weights;
     }
     private LineChart initLineChart() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
         LineChart lineChart = new LineChart(application.getApplicationContext());
-//        lineChart.getDescription().setText("Weight/Date");
-//        lineChart.getAxisRight().setEnabled(false);
 
         List<Weight> weights = repository.getAll();
         List<Entry> weightsData = new ArrayList<>();
@@ -153,7 +138,7 @@ public class WeightTrackingViewModel extends ViewModel {
                     weightEntity.setDate(date);
                     weightEntity.setWeight(weight);
 
-                    insert(weightEntity);
+                    repository.insert(weightEntity);
 
                     updateData();
                 } else {
@@ -166,8 +151,20 @@ public class WeightTrackingViewModel extends ViewModel {
             exception.printStackTrace();
         }
     }
-    public void insert(Weight weight) {
-        repository.insert(weight);
+    public void deleteButton(int id) {
+        List<Weight> weights = repository.getAll();
+
+        if (weights == null) return;
+
+        int counter = 0;
+        for (Weight weight : weights) {
+            if (id == counter) {
+                repository.delete((weight.getUid()));
+            }
+            counter++;
+        }
+
+        updateData();
     }
 
     @Override
