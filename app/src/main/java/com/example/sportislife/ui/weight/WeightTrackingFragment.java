@@ -30,7 +30,6 @@ public class WeightTrackingFragment extends Fragment {
     private FragmentWeightTrackingBinding binding;
 
     private EditText editTextDate, editTextWeight;
-    //private FloatingActionButton btnSaveWeight;
     private LineChart weightLineChart;
     private ListView listViewHistoryWeight;
     private WeightTrackingAdapter weightTrackingAdapter;
@@ -47,14 +46,13 @@ public class WeightTrackingFragment extends Fragment {
         binding.setWeightTrackingViewModel(viewModel);
         binding.setLifecycleOwner(this);
 
-        editTextDate = binding.editTextDate;
-        editTextWeight = binding.editTextWeight;
-        weightLineChart = binding.weightLineChart;
-        listViewHistoryWeight = binding.listViewHistoryWeight;
+        editTextDate = binding.editTextDateWT;
+        editTextWeight = binding.editTextWeightWT;
+        weightLineChart = binding.weightLineChartWT;
+        listViewHistoryWeight = binding.listViewHistoryWeightWT;
 
         viewModel.getCurrentDate().observe(getViewLifecycleOwner(), editTextDate::setText);
 
-        //viewModel.getWeightData().observe(getViewLifecycleOwner(), weightLineChart::setData);
         viewModel.getLineChart().observe(getViewLifecycleOwner(), lineChart -> {
             weightLineChart.getDescription().setText("Weight/Date");
             weightLineChart.setData(lineChart.getData());
@@ -64,7 +62,7 @@ public class WeightTrackingFragment extends Fragment {
         });
 
         viewModel.getWeightData().observe(getViewLifecycleOwner(), weightData -> {
-            weightTrackingAdapter = new WeightTrackingAdapter(application.getApplicationContext(), weightData);
+            weightTrackingAdapter = new WeightTrackingAdapter(getActivity(), weightData);
             listViewHistoryWeight.setAdapter(weightTrackingAdapter);
         });
         listViewHistoryWeight.setOnItemClickListener((parent, view, position, id) -> {

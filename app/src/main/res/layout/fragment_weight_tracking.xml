@@ -52,7 +52,7 @@
                 android:paddingStart="15dp">
 
                 <EditText
-                    android:id="@+id/editTextDate"
+                    android:id="@+id/editTextDateWT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={weightTrackingViewModel.inputDate}"
@@ -62,7 +62,7 @@
                     android:textSize="14dp" />
 
                 <EditText
-                    android:id="@+id/editTextWeight"
+                    android:id="@+id/editTextWeightWT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={weightTrackingViewModel.inputWeight}"
@@ -78,7 +78,6 @@
                 android:padding="10dp">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnSaveWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -97,7 +96,7 @@
             android:background="@drawable/cardborder" >
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/weightLineChart"
+                android:id="@+id/weightLineChartWT"
                 android:layout_width="match_parent"
                 android:layout_height="350dp" />
 
@@ -139,7 +138,7 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/listViewHistoryWeight"
+                android:id="@+id/listViewHistoryWeightWT"
                 android:layout_width="match_parent"
                 android:layout_height="160dp" />
 

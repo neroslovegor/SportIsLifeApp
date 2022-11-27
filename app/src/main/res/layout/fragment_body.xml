@@ -30,7 +30,7 @@
                 android:padding="15dp">
 
                 <EditText
-                    android:id="@+id/editTextName"
+                    android:id="@+id/editTextNameB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={bodyViewModel.inputName}"
@@ -39,7 +39,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/editTextWeight"
+                    android:id="@+id/editTextWeightB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={bodyViewModel.inputWeight}"
@@ -48,7 +48,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/editTextHeight"
+                    android:id="@+id/editTextHeightB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@={bodyViewModel.inputHeight}"
@@ -58,7 +58,7 @@
 
 
                 <Button
-                    android:id="@+id/btnCalendar"
+                    android:id="@+id/btnCalendarB"
                     style="@style/Widget.MaterialComponents.TimePicker.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,19 +77,19 @@
                         android:text="Пол: " />
 
                     <RadioGroup
-                        android:id="@+id/radGroupGender"
+                        android:id="@+id/radGroupGenderB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/radBtnMale"
+                            android:id="@+id/radBtnMaleB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Мужской" />
 
                         <RadioButton
-                            android:id="@+id/radBtnFemale"
+                            android:id="@+id/radBtnFemaleB"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Женский" />
@@ -106,7 +106,7 @@
                     android:paddingBottom="12dp" >
 
                     <AutoCompleteTextView
-                        android:id="@+id/physicalActivity"
+                        android:id="@+id/physicalActivityB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none" />
@@ -153,7 +153,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textViewBMI"
+                        android:id="@+id/textViewBMIB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -175,7 +175,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textViewBMIStatus"
+                        android:id="@+id/textViewBMIStatusB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
@@ -197,7 +197,7 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/textViewCalorieNorm"
+                        android:id="@+id/textViewCalorieNormB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
